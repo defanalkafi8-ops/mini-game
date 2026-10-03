@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arcade Hub - 10 Mini Games</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@400;600;800&display=swap');
+        .font-pixel { font-family: 'Press Start 2P', cursive; }
+        .font-sans { font-family: 'Outfit', sans-serif; }
+        .crt-overlay::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 50;
+            background-size: 100% 3px, 6px 100%;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+        .neon-text { text-shadow: 0 0 10px rgba(236, 72, 153, 0.8), 0 0 20px rgba(236, 72, 153, 0.5); }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col justify-between crt-overlay select-none relative overflow-x-hidden">
+
+    <!-- Header -->
+    <header class="p-4 md:p-6 flex justify-between items-center z-10 border-b border-slate-800 bg-slate-900/60 backdrop-blur-md">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="showScreen('game-menu')">
+            <i class="fa-solid fa-gamepad text-pink-500 text-2xl animate-pulse"></i>
+            <span class="font-pixel text-xs md:text-sm text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-400 to-cyan-400">ARCADE HUB</span>
+        </div>
+        <button onclick="showScreen('game-menu')" class="p-2 px-4 rounded-xl bg-pink-600 hover:bg-pink-500 text-white font-semibold transition text-xs flex items-center gap-2 shadow-lg shadow-pink-600/30">
+            <i class="fa-solid fa-grid-2"></i> Menu Game
+        </button>
+    </header>
+
+    <main class="flex-grow flex items-center justify-center p-4 relative z-10 my-4">
+
+        <!-- ================= MENU GAME ================= -->
+        <section id="game-menu" class="w-full max-w-5xl">
+            <div class="text-center mb-8">
+                <h1 class="font-pixel text-2xl md:text-4xl text-pink-400 mb-3 neon-text">10 MINI GAMES</h1>
+                <p class="text-slate-400 text-xs md:text-sm">Pilih game favoritmu dan mainkan sekarang!</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                
+                <!-- Game 1 -->
+                <div onclick="initBlockBlast(); showScreen('blockblast-screen')" class="cursor-pointer bg-slate-900/80 border border-slate-800 hover:border-amber-500/50 rounded-2xl p-4 transition hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <i class="fa-solid fa-cubes text-amber-400 text-2xl mb-2"></i>
+                        <h3 class="font-pixel text-xs text-white mb-1">Block Blast</h3>
+                        <p class="text-slate-400 text-[10px]">Susun balok 8x8.</p>
+                    </div>
+                    <button class="mt-4 w-full py-1.5 rounded-lg bg-amber-600 text-white font-semibold text-[10px]">Main</button>
+                </div>
+
+                <!-- Game 2 -->
+                <div onclick="initSnake(); showScreen('snake-screen')" class="cursor-pointer bg-slate-900/80 border border-slate-800 hover:border-emerald-500/50 rounded-2xl p-4 transition hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <i class="fa-solid fa-staff-snake text-emerald-400 text-2xl mb-2"></i>
+                        <h3 class="font-pixel text-xs text-white mb-1">Snake Klasik</h3>
+                        <p class="text-slate-400 text-[10px]">Makan & tambah panjang.</p>
+                    </div>
+                    <button class="mt-4 w-full py-1.5 rounded-lg bg-emerald-600 text-white font-semibold text-[10px]">Main</button>
+                </div>
+
+                <!-- Game 3 -->
+                <div onclick="initTicTacToe(); showScreen('tictactoe-screen')" class="cursor-pointer bg-slate-900/80 border border-slate-800 hover:border-pink-500/50 rounded-2xl p-4 transition hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <i class="fa-solid fa-xmark text-pink-400 text-2xl mb-2"></i>
+                        <h3 class="font-pixel text-xs text-white mb-1">Tic-Tac-Toe</h3>
+                        <p class="text-slate-400 text-[10px]">Adu strategi X dan O.</p>
+                    </div>
+                    <button class="mt-4 w-full py-1.5 rounded-lg bg-pink-600 text-white font-semibold text-[10px]">Main</button>
+                </div>
+
+                <!-- Game 4 -->
+                <div onclick="initFlappy(); showScreen('flappy-screen')" class="cursor-pointer bg-slate-900/80 border border-slate-800 hover:border-cyan-500/50 rounded-2xl p-4 transition hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <i class="fa-solid fa-crow text-cyan-400 text-2xl mb-2"></i>
+                        <h3 class="font-pixel text-xs text-white mb-1">Flappy Pixel</h3>
+                        <p class="text-slate-400 text-[10px]">Terbang lewati pipa.</p>
+                    </div>
+                    <button class="mt-4 w-full py-1.5 rounded-lg bg-cyan-600 text-white font-semibold text-[10px]">Main</button>
+                </div>
+
+                <!-- Game 5 -->
+                <div onclick="initMemory(); showScreen('memory-screen')" class="cursor-pointer bg-slate-900/80 border border-slate-800 hover:border-purple-500/50 rounded-2xl p-4 transition hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <i class="fa-solid fa-clone text-purple-400 text-2xl mb-2"></i>
+                        <h3 class="font-pixel text-xs text-white mb-1">Memory Match</h3>
+                        <p class="text-slate-400 text-[10px]">Cocokkan pasang kartu.</p>
+                    </div>
+                    <button class="mt-4 w-full py-1.5 rounded-lg bg-purple-600 text-white font-semibold text-[10px]">Main</button>
+                </div>
+
+                <!-- Game 6 -->
+                <div onclick="initPong(); showScreen('pong-screen')" class="cursor-pointer bg-slate-900/80 border border-slate-800 hover:border-red-500/50 rounded-2xl p-4 transition hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <i class="fa-solid fa-table-tennis-paddle-ball text-red-400 text-2xl mb-2"></i>
+                        <h3 class="font-pixel text-xs text-white mb-1">Pong Breaker</h3>
+                        <p class="text-slate-400 text-[10px]">Pantulkan bola hancurkan balok.</p>
+                    </div>
+                    <button class="mt-4 w-full py-1.5 rounded-lg bg-red-600 text-white font-semibold text-[10px]">Main</button>
+                </div>
+
+                <!-- Game 7 -->
+                <div onclick="initWhack(); showScreen('whack-screen')" class="cursor-pointer bg-slate-900/80 border border-slate-800 hover:border-yellow-500/50 rounded-2xl p-4 transition hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <i class="fa-solid fa-hammer text-yellow-400 text-2xl mb-2"></i>
+                        <h3 class="font-pixel text-xs text-white mb-1">Pukul Tikus</h3>
+                        <p class="text-slate-400 text-[10px]">Pukul tikus yang muncul.</p>
+                    </div>
+                    <button class="mt-4 w-full py-1.5 rounded-lg bg-yellow-600 text-white font-semibold text-[10px]">Main</button>
+                </div>
+
+                <!-- Game 8 -->
+                <div onclick="initMath(); showScreen('math-screen')" class="cursor-pointer bg-slate-900/80 border border-slate-800 hover:border-blue-500/50 rounded-2xl p-4 transition hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <i class="fa-solid fa-calculator text-blue-400 text-2xl mb-2"></i>
+                        <h3 class="font-pixel text-xs text-white mb-1">Math Quiz</h3>
+                        <p class="text-slate-400 text-[10px]">Hitung cepat dengan waktu.</p>
+                    </div>
+                    <button class="mt-4 w-full py-1.5 rounded-lg bg-blue-600 text-white font-semibold text-[10px]">Main</button>
+                </div>
+
+                <!-- Game 9 -->
+                <div onclick="initTyping(); showScreen('typing-screen')" class="cursor-pointer bg-slate-900/80 border border-slate-800 hover:border-teal-500/50 rounded-2xl p-4 transition hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <i class="fa-solid fa-keyboard text-teal-400 text-2xl mb-2"></i>
+                        <h3 class="font-pixel text-xs text-white mb-1">Ketik Cepat</h3>
+                        <p class="text-slate-400 text-[10px]">Tes kecepatan mengetik.</p>
+                    </div>
+                    <button class="mt-4 w-full py-1.5 rounded-lg bg-teal-600 text-white font-semibold text-[10px]">Main</button>
+                </div>
+
+                <!-- Game 10 -->
+                <div onclick="initColor(); showScreen('color-screen')" class="cursor-pointer bg-slate-900/80 border border-slate-800 hover:border-indigo-500/50 rounded-2xl p-4 transition hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <i class="fa-solid fa-palette text-indigo-400 text-2xl mb-2"></i>
+                        <h3 class="font-pixel text-xs text-white mb-1">Tebak Warna</h3>
+                        <p class="text-slate-400 text-[10px]">Cek kecocokan warna & teks.</p>
+                    </div>
+                    <button class="mt-4 w-full py-1.5 rounded-lg bg-indigo-600 text-white font-semibold text-[10px]">Main</button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- GAME 1: BLOCK BLAST -->
+        <section id="blockblast-screen" class="hidden w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col items-center">
+            <div class="w-full flex justify-between items-center mb-4">
+                <h2 class="font-pixel text-sm text-amber-400">Block Blast (Skor: <span id="bb-score">0</span>)</h2>
+                <button onclick="initBlockBlast()" class="p-2 bg-slate-800 rounded-xl text-xs"><i class="fa-solid fa-rotate-right"></i></button>
+            </div>
+            <div id="bb-grid" class="grid grid-cols-8 gap-1 p-2 bg-slate-950 rounded-2xl border border-slate-800 w-full aspect-square mb-4"></div>
+            <div id="bb-pieces" class="flex justify-around items-center w-full min-h-[80px] bg-slate-950/60 p-2 rounded-2xl border border-slate-800"></div>
+        </section>
+
+        <!-- GAME 2: SNAKE -->
+        <section id="snake-screen" class="hidden w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col items-center">
+            <div class="w-full flex justify-between items-center mb-4">
+                <h2 class="font-pixel text-sm text-emerald-400">Snake (Skor: <span id="snake-score">0</span>)</h2>
+                <button onclick="initSnake()" class="p-2 bg-slate-800 rounded-xl text-xs"><i class="fa-solid fa-rotate-right"></i></button>
+            </div>
+            <div class="relative w-full aspect-square bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 flex items-center justify-center mb-4">
+                <canvas id="snake-canvas" width="320" height="320"></canvas>
+                <div id="snake-overlay" class="absolute inset-0 bg-slate-950/80 flex flex-col items-center justify-center p-4">
+                    <button onclick="startSnakeGame()" class="px-6 py-2 bg-emerald-600 font-pixel text-xs rounded-xl text-white">START</button>
+                </div>
+            </div>
+            <div class="grid grid-cols-3 gap-2 w-36">
+                <div></div><button onclick="changeSnakeDir('UP')" class="h-9 bg-slate-800 rounded-xl"><i class="fa-solid fa-chevron-up"></i></button><div></div>
+                <button onclick="changeSnakeDir('LEFT')" class="h-9 bg-slate-800 rounded-xl"><i class="fa-solid fa-chevron-left"></i></button>
+                <button onclick="changeSnakeDir('DOWN')" class="h-9 bg-slate-800 rounded-xl"><i class="fa-solid fa-chevron-down"></i></button>
+                <button onclick="changeSnakeDir('RIGHT')" class="h-9 bg-slate-800 rounded-xl"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+        </section>
+
+        <!-- GAME 3: TIC TAC TOE -->
+        <section id="tictactoe-screen" class="hidden w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-pixel text-sm text-pink-400">Tic-Tac-Toe</h2>
+                <button onclick="initTicTacToe()" class="p-2 bg-slate-800 rounded-xl text-xs"><i class="fa-solid fa-rotate-right"></i></button>
+            </div>
+            <p id="ttt-status" class="text-xs text-slate-400 mb-4">Giliran: Pemain X</p>
+            <div id="ttt-board" class="grid grid-cols-3 gap-3 aspect-square"></div>
+        </section>
+
+        <!-- GAME 4: FLAPPY PIXEL -->
+        <section id="flappy-screen" class="hidden w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col items-center">
+            <div class="w-full flex justify-between items-center mb-4">
+                <h2 class="font-pixel text-sm text-cyan-400">Flappy Pixel (Skor: <span id="flappy-score">0</span>)</h2>
+                <button onclick="initFlappy()" class="p-2 bg-slate-800 rounded-xl text-xs"><i class="fa-solid fa-rotate-right"></i></button>
+            </div>
+            <div class="relative w-full aspect-[4/5] bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 flex items-center justify-center" onclick="jumpFlappy()">
+                <canvas id="flappy-canvas" width="320" height="400"></canvas>
+                <div id="flappy-overlay" class="absolute inset-0 bg-slate-950/80 flex flex-col items-center justify-center p-4">
+                    <button onclick="startFlappyGame()" class="px-6 py-2 bg-cyan-600 font-pixel text-xs rounded-xl text-white">START</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- GAME 5: MEMORY MATCH -->
+        <section id="memory-screen" class="hidden w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-pixel text-sm text-purple-400">Memory Match</h2>
+                <button onclick="initMemory()" class="p-2 bg-slate-800 rounded-xl text-xs"><i class="fa-solid fa-rotate-right"></i></button>
+            </div>
+            <div id="memory-grid" class="grid grid-cols-4 gap-3 aspect-square"></div>
+        </section>
+
+        <!-- GAME 6: PONG BREAKER -->
+        <section id="pong-screen" class="hidden w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col items-center">
+            <div class="w-full flex justify-between items-center mb-4">
+                <h2 class="font-pixel text-sm text-red-400">Pong Breaker (Skor: <span id="pong-score">0</span>)</h2>
+                <button onclick="initPong()" class="p-2 bg-slate-800 rounded-xl text-xs"><i class="fa-solid fa-rotate-right"></i></button>
+            </div>
+            <div class="relative w-full aspect-[4/5] bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 flex items-center justify-center">
+                <canvas id="pong-canvas" width="320" height="400"></canvas>
+                <div id="pong-overlay" class="absolute inset-0 bg-slate-950/80 flex flex-col items-center justify-center p-4">
+                    <button onclick="startPongGame()" class="px-6 py-2 bg-red-600 font-pixel text-xs rounded-xl text-white">START</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- GAME 7: WHACK-A-MOLE -->
+        <section id="whack-screen" class="hidden w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-pixel text-sm text-yellow-400">Pukul Tikus (Skor: <span id="whack-score">0</span>)</h2>
+                <button onclick="initWhack()" class="p-2 bg-slate-800 rounded-xl text-xs"><i class="fa-solid fa-rotate-right"></i></button>
+            </div>
+            <div id="whack-grid" class="grid grid-cols-3 gap-3 aspect-square"></div>
+        </section>
+
+        <!-- GAME 8: MATH QUIZ -->
+        <section id="math-screen" class="hidden w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl text-center">
+            <h2 class="font-pixel text-sm text-blue-400 mb-4">Math Quiz</h2>
+            <div id="math-box" class="bg-slate-950 p-6 rounded-2xl border border-slate-800 mb-4">
+                <p id="math-question" class="font-pixel text-2xl text-white mb-2">?</p>
+                <p class="text-xs text-slate-400">Waktu: <span id="math-time">10</span>s | Skor: <span id="math-score">0</span></p>
+            </div>
+            <div id="math-answers" class="grid grid-cols-2 gap-3"></div>
+        </section>
+
+        <!-- GAME 9: TYPING TEST -->
+        <section id="typing-screen" class="hidden w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl text-center">
+            <h2 class="font-pixel text-sm text-teal-400 mb-4">Ketik Cepat</h2>
+            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 mb-4">
+                <p id="typing-target" class="font-pixel text-sm text-teal-300 mb-2">Ketik...</p>
+                <p class="text-xs text-slate-400">Skor: <span id="typing-score">0</span></p>
+            </div>
+            <input type="text" id="typing-input" oninput="checkTyping()" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-center font-pixel text-xs focus:outline-none focus:border-teal-500" placeholder="Ketik kata di atas..." autofocus>
+        </section>
+
+        <!-- GAME 10: COLOR MATCH -->
+        <section id="color-screen" class="hidden w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl text-center">
+            <h2 class="font-pixel text-sm text-indigo-400 mb-4">Tebak Warna</h2>
+            <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 mb-4">
+                <p id="color-text" class="font-pixel text-3xl mb-2">WARNA</p>
+                <p class="text-xs text-slate-400">Apakah warna Teks sesuai dengan Artikata?</p>
+            </div>
+            <div class="flex gap-4">
+                <button onclick="checkColor(false)" class="flex-1 py-3 bg-red-600 rounded-xl font-pixel text-xs">BEDA</button>
+                <button onclick="checkColor(true)" class="flex-1 py-3 bg-emerald-600 rounded-xl font-pixel text-xs">SAMA</button>
+            </div>
+            <p class="text-xs text-slate-400 mt-4">Skor: <span id="color-score">0</span></p>
+        </section>
+
+    </main>
+
+    <script>
+        function showScreen(screenId) {
+            const screens = ['game-menu', 'blockblast-screen', 'snake-screen', 'tictactoe-screen', 'flappy-screen', 'memory-screen', 'pong-screen', 'whack-screen', 'math-screen', 'typing-screen', 'color-screen'];
+            screens.forEach(s => {
+                const el = document.getElementById(s);
+                if (el) el.classList.add('hidden');
+           
